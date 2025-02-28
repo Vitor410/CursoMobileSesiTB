@@ -12,3 +12,26 @@
    - Encapsulamento, 
    - abstração,
    - Iterface.
+   
+-Introdução ao fluter
+    -Nativo x Multiplataforma
+    -Configuração do ambiente de desenvolvimeno
+    -Estrutura de um aplicativo Flutter
+        -Inface linhas de comando (CLI)
+            -flutter create - criat workspaces(projetos)
+            "Flutter create --empty" - app padrão (Hello World);
+            "Flutter create --platforms=android"
+                escolher a plataforma de desenvolvimeno
+    Exemplo de uso :
+    flutter create --platforms=android --empty nome_app
+    obs : Não usar caracteres especias no nome "ç,ã,á"
+        
+        -flutter run - rodar a aplicação no emulador
+        --verbose 
+        "flutter run -v"
+
+    - Flutter pug get (atualização dos pacotes)
+
+    --Flutter upgrate - atualiza a versão do flutter
+    --Flutter Downgrade - volta para uma versão anterior
+    --Flutter doctor -verrifica as disponibilidades de uso 
