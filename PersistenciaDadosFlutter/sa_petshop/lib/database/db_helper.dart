@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sa_petshop/models/consulta_model.dart';
 import 'package:sa_petshop/models/pet_model.dart';
@@ -8,6 +5,16 @@ import 'package:sqflite/sqflite.dart';
 
 class PetShopDBHelper{
   static Database? _database; //obj para criar conexões
+  //transformando a classe em singleton -> 
+  //não permite instanciar outro objeto enquanto um objeto estiver ativo
+  static final PetShopDBHelper _instance = PetShopDBHelper._internal();
+
+  //construtor do Singleton
+  PetShopDBHelper._internal();
+  factory PetShopDBHelper(){
+    return _instance;
+  }
+
 
   Future<Database> get database async{
     if(_database != null){
@@ -25,31 +32,27 @@ class PetShopDBHelper{
     return await openDatabase(
       path,
       version:1,
-      onCreate: _onCreate,
+      onCreate: (db, version) async{
+        await db.execute(
+          """CREATE TABLE IF NOT EXISTS pets(
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          nome TEXT NOT NULL,
+          raca TEXT NOT NULL,
+          nome_dono TEXT NOT NULL,
+          telefone_dono TEXT NOT NULL);"""
+          // CREATE TABLE IF NOT EXISTS consultas(
+          // id INTEGER PRIMARY KEY AUTOINCREMENT,
+          // pet_id INTEGER NOT NULL,
+          // data_hora TEXT NOT NULL,
+          // tipo_servico TEXT NOT NULL,
+          // observacao TEXT NOT NULL,
+          // FOREIGN KEY (pet_id) REFERENCES pets(id) ON DELETE CASCADE);
+          
+        );
+      },
     );
   }
 
-  Future<void> _onCreate(Database db, int version) async{
-    //criar a tabela dos pets
-    await db.execute(
-      """CREATE TABLE pets(id INTEGER PRIMARY KEY AUTOINCREMENT,
-      nome TEXT NOT NULL,
-      raca TEXT NOT NULL,
-      nome_dono TEXT NOT NULL,
-      telefone_dono TEXT NOT NULL)"""
-    );
-
-    //CRIAR A TABELA DAS CONSULTAS
-    await db.execute(
-      """CREATE TABLE consultas(
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      pet_id INTEGER NOT NULL,
-      data_hora TEXT NOT NULL,
-      tipo_servico TEXT NOT NULL,
-      observacao TEXT, 
-      FOREIGN KEY (pet_id) REFERENCES pets(id) ON DELETE CASCADE)"""
-    );
-  }
 
   //MÉTODOS CRUD PARA pets
   Future<int> insertPet(Pet pet) async{
@@ -73,7 +76,7 @@ class PetShopDBHelper{
     if(maps.isNotEmpty){
       return Pet.fromMap(maps.first); //cria o obj com 1º elementos da list
     }else{
-      null;
+      return null;
     }
   }
 

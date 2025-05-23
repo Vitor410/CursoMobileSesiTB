@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sa_petshop/controllers/pets_controller.dart';
 import 'package:sa_petshop/models/pet_model.dart';
 import 'package:sa_petshop/screens/add_pet_screen.dart';
+import 'package:sa_petshop/screens/pet_detalhe_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -28,7 +29,8 @@ class _HomeScreenState extends State<HomeScreen>{
     try {
         _pets = await _petsController.fetchPets();
     } catch (erro) { //pega o erro do sistema
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Exception: $erro")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Exception: $erro")));
     } finally{ //execução obrigatória
       setState(() {
         _isLoanding = false;
@@ -48,10 +50,9 @@ class _HomeScreenState extends State<HomeScreen>{
           return ListTile(
             title: Text(pet.nome),
             subtitle: Text(pet.raca),
-            onTap: () async {
-              //navegação para a página de detalhe do Pet
+            onTap: () => Navigator.push(context,
+             MaterialPageRoute(builder: (context)=>PetDetalheScreen(petId: pet.id!)))
               
-            },
           );
         }),
       floatingActionButton: FloatingActionButton(
