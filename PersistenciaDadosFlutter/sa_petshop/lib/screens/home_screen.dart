@@ -5,11 +5,13 @@ import 'package:sa_petshop/screens/add_pet_screen.dart';
 import 'package:sa_petshop/screens/pet_detalhe_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+  // controla as mudanças de State
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>{
+class _HomeScreenState extends State<HomeScreen> {
+  // build da tela
   final PetsController _petsController = PetsController();
 
   List<Pet> _pets = [];
@@ -22,16 +24,20 @@ class _HomeScreenState extends State<HomeScreen>{
     _loadPets();
   }
 
-  Future<void> _loadPets() async{
+  Future<void> _loadPets() async {
     setState(() {
       _isLoanding = true;
+      _pets = [];
     });
     try {
-        _pets = await _petsController.fetchPets();
-    } catch (erro) { //pega o erro do sistema
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Exception: $erro")));
-    } finally{ //execução obrigatória
+      _pets = await _petsController.fetchPets();
+    } catch (erro) {
+      //pega o erro do sistema
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Exception: $erro")));
+    } finally {
+      //execução obrigatória
       setState(() {
         _isLoanding = false;
       });
@@ -43,26 +49,36 @@ class _HomeScreenState extends State<HomeScreen>{
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(title: Text("Meus Pets")),
-      body: _isLoanding ? Center(child: CircularProgressIndicator()) : ListView.builder(
-        itemCount: _pets.length,
-        itemBuilder: (context,index) {
-          final pet = _pets[index];
-          return ListTile(
-            title: Text(pet.nome),
-            subtitle: Text(pet.raca),
-            onTap: () => Navigator.push(context,
-             MaterialPageRoute(builder: (context)=>PetDetalheScreen(petId: pet.id!)))
-              
-          );
-        }),
+      body:
+          _isLoanding //operador Ternário
+              ? Center(child: CircularProgressIndicator())
+              : ListView.builder(
+                itemCount: _pets.length,
+                itemBuilder: (context, index) {
+                  final pet = _pets[index];
+                  return ListTile(
+                    title: Text(pet.nome),
+                    subtitle: Text(pet.raca),
+                    onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                (context) => PetDetalheScreen(petId: pet.id!), //LEVA O ID DO PET SELECIONADO
+                          ),
+                        ),
+                  );
+                },
+              ),
       floatingActionButton: FloatingActionButton(
         tooltip: "Adicionar Novo Pet",
         onPressed: () async {
-          await Navigator.push(context, MaterialPageRoute(builder: (context)=> AddPetScreen()));
+          await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddPetScreen()),
+          );
         },
         child: Icon(Icons.add),
-        ),
+      ),
     );
   }
-
 }

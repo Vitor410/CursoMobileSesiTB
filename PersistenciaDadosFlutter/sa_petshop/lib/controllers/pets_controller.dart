@@ -1,24 +1,25 @@
 import 'package:sa_petshop/database/db_helper.dart';
-import 'package:sa_petshop/models/pet_model.dart';
+
+import '../models/pet_model.dart';
 
 class PetsController {
-  //atributo -> 
+  //atributo -> é conexão com DB
   final PetShopDBHelper _dbHelper = PetShopDBHelper();
 
 
-  Future<int> addPet(Pet pet) async {
+  Future<int> addPet(Pet pet) async{
     return await _dbHelper.insertPet(pet);
   }
 
-  Future<List<Pet>> fetchPets() async {
+  Future<List<Pet>> fetchPets() async{
     return await _dbHelper.getPets();
   }
 
-  Future<Pet?> findPetById(int id) async {
+  Future<Pet?> findPetById(int id) async{
     return await _dbHelper.getPetById(id);
   }
 
-  Future<int> deletePet(int id) async {
+  Future<int> deletePet(int id) async{
     return await _dbHelper.deletePet(id);
   }
 }

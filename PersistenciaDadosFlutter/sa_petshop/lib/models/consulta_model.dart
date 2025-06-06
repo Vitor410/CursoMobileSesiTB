@@ -5,7 +5,7 @@ class Consulta{
   final int petId; // Chave Estrangeira para o PET
   final DateTime dataHora;
   final String tipoServico;
-  final String? observacao; // pode ser nulo
+  final String observacao;
 
   //CONSTRUTOR
   Consulta({
@@ -13,7 +13,7 @@ class Consulta{
     required this.petId,
     required this.dataHora,
     required this.tipoServico,
-    this.observacao
+    required this.observacao
   });
 
   //Converter Map: Obj => BD

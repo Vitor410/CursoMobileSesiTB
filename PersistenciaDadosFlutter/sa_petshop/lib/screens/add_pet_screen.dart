@@ -30,12 +30,18 @@ class _AddPetScreenState extends State<AddPetScreen> {
       );
 
       //mando para o banco
-      await _petsController.addPet(newPet);
+      try {
+        await _petsController.addPet(newPet);
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Excepetion: $e")),
+        );
+      }
       Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen())); //Retorna para a Tela Anterior
     }
   }
 
-  @override
+  @override //build da tela 
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
