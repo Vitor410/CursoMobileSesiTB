@@ -1,0 +1,15 @@
+{
+    "users": [
+        {"id": 1, "name": "joão Silva", "email": "joão@email.com"},
+        {"id": 2, "name": "Maria Souza", "email": "Maria@email.com"}
+    ],
+
+    "books": [
+        {"id": 1, "title": "O Guia do Mochileiro das Galáxias", "author": "Douglas Adams", "available": false},
+        {"id": 2, "title": "Memórias Póstumas de Brás Cubas", "author": "Machado de Assis", "available": true}
+    ],
+
+    "loans": [
+        {"id": 1, "userId": 1, "booksId": 1, "startDate": "2025-08-20", "dueDate": "2025-08-30", "returned": false}
+    ]
+}
