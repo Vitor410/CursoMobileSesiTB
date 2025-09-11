@@ -1,3 +1,21 @@
-# todo_list_firebase
+## Estrutura do Bando de Dados NoSql
 
-A new Flutter project.
+Banco de dados
+
+"usuarios":[
+    "usuario1":{
+        "tarefas":
+        {
+            "titulo":"tarefa1,
+            "concluida: false,
+            "dataCriacao":7364912
+        },
+        {
+            "titulo":"tarefa1,
+            "concluida: false,
+            "dataCriacao":7364912
+        }
+    }
+    ,
+    "usuario2"
+]

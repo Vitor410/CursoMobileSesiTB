@@ -18,4 +18,19 @@ void main() {
   );
 }
 
+void runApp(MaterialApp materialApp) {
+}
+
+class MaterialApp {
+}
+
+class TelaConfirmacaoView {
+}
+
+class TelaCadastroView {
+}
+
+class TelaInicialView {
+}
+
 //quando era uma unica tela -> continuava na Class

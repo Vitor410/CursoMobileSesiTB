@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_list_firebase/firebase_options.dart';
+import 'package:todo_list_firebase/views/autenticacao_view.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized(); //garantir a inicialização dos bindings
@@ -12,7 +13,4 @@ void main() async{
     title: "Lista de Tarefas",
     home: AutenticacaoView(), //direciona para tela de autentificação
   ));
-}
-
-class AutenticacaoView {
 }
