@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "177016222513",
+    "project_id": "sinifavorito-sesib",
+    "storage_bucket": "sinifavorito-sesib.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:177016222513:android:8cb55222b89aebf9d8b610",
+        "android_client_info": {
+          "package_name": "com.example.formative_cine_favorite"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz6uV2zeoVYKgJ7qUbPy9I3Nld1ed35Vw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
