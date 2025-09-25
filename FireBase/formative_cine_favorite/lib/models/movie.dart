@@ -4,7 +4,7 @@ class Movie {
   //atributos
   final int id; //Id do filme no TMDB
   final String title; //Titulo do Filme
-  final String posterPath; //URL da imagem do põster
+  final String posterPath; //URL da imagem do pôster
 
   double rating; //nota que o usuário dará ao filme (de 0 a 5)
 
@@ -17,7 +17,7 @@ class Movie {
   });
 
   //converter de um OBJ para modelo de dados para o FireStore
-  // toMap +> JSON
+  // toMap OBJ=> JSON
   Map<String, dynamic> toMap() {
     return {
       "id": id,
@@ -27,12 +27,14 @@ class Movie {
     };
   }
 
-  //criar um Obj a partir dos dados da API TMDB
-  //fromMap Json => OBJ
+  //Criar um Obj a partir dos dados do FireStore
+  //fabricar um OBJ a partir de um Json
   factory Movie.fromMap(Map<String, dynamic> map) {
     return Movie(
       id: map["id"],
       title: map["title"],
-      posterPath: map["posterPath"]);
+      posterPath: map["posterPath"],
+      rating: map["rating"] != null ? (map["rating"] as num).toDouble() : 0.0,
+    );
   }
 }

@@ -1,4 +1,5 @@
-//classe responsavel per buscar as informações no TMDB e converter em OBJ
+// classe responsavel per buscar as informações no TMDB e converter em OBJ
+// Serviço de Conexão com a API
 
 import 'dart:convert';
 
@@ -11,7 +12,7 @@ class TmdbController {
 
 
   //método para buscar filme com base no texto
-
+  // static -> método executado pela Classe e não pelo OBJ
   static Future<List<Map<String,dynamic>>> searchMovies(String query) async{
     //convert String em URL
     final queryUrl = Uri.parse("$_baseURL/search/movie?api_key=$_apiKey&query=$query&language=pt-BR");
@@ -20,7 +21,9 @@ class TmdbController {
     
     //se reposta form ok ==200
     if(response.statusCode == 200){
+      //convert json => string (dart)
       final data = json.decode(response.body);
+      //retorna convertendo String em List<Map<String,dynamic>>
       return List<Map<String,dynamic>>.from(data["results"]);
     }else{
     //caso contrário cria uma exception
