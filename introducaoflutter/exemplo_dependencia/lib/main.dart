@@ -28,3 +28,6 @@ class Myapp extends StatelessWidget{ //classe principal
     );
   }
 }
+
+class Scaffold {
+}

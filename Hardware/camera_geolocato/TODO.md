@@ -1,0 +1,9 @@
+- [x] Update pubspec.yaml with dependencies: image_picker, geolocator, path_provider, permission_handler
+- [x] Create lib/models/photo.dart
+- [x] Create lib/services/photo_service.dart
+- [x] Create lib/screens/gallery_screen.dart
+- [x] Create lib/screens/camera_screen.dart
+- [x] Update lib/main.dart
+- [x] Run flutter pub get
+- [x] Test the app
+- [x] Implement function to display current location when clicking on photo using geolocator
