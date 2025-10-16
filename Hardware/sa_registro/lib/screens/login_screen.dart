@@ -5,9 +5,7 @@ import 'register_screen.dart';
 import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  final Company? company;
-
-  const LoginScreen({super.key, this.company});
+  const LoginScreen({super.key});
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -28,15 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (widget.company != null)
-              Text(
-                'Company: ${widget.company!.name}',
-                style: const TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            const SizedBox(height: 16.0),
             TextField(
               controller: _nifController,
               decoration: const InputDecoration(
@@ -61,8 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        RegisterScreen(company: widget.company),
+                    builder: (context) => const RegisterScreen(),
                   ),
                 );
               },
@@ -87,24 +75,11 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    if (widget.company == null) {
-      setState(() {
-        _error = 'No company selected';
-      });
-      return;
-    }
-
-    var user = await _auth.signInWithNifAndPassword(
-      nif,
-      password,
-      widget.company!.id,
-    );
+    var user = await _auth.signInWithNifAndPassword(nif, password);
     if (user != null) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-          builder: (context) => HomeScreen(company: widget.company!),
-        ),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     } else {
       setState(() {

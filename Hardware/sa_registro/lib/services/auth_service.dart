@@ -6,14 +6,10 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<User?> signInWithNifAndPassword(
-    String nif,
-    String password,
-    String companyId,
-  ) async {
+  Future<User?> signInWithNifAndPassword(String nif, String password) async {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(
-        email: '$nif@$companyId.com', // Using NIF@companyId as email
+        email: '$nif@example.com', // Using NIF@example.com as email
         password: password,
       );
       return result.user;
@@ -23,21 +19,14 @@ class AuthService {
     }
   }
 
-  Future<User?> registerWithNifAndPassword(
-    String nif,
-    String password,
-    String companyId,
-  ) async {
+  Future<User?> registerWithNifAndPassword(String nif, String password) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
-        email: '$nif@$companyId.com',
+        email: '$nif@example.com',
         password: password,
       );
-      // Store user company association
-      await _db.collection('users').doc(result.user!.uid).set({
-        'nif': nif,
-        'companyId': companyId,
-      });
+      // Store user nif
+      await _db.collection('users').doc(result.user!.uid).set({'nif': nif});
       return result.user;
     } catch (e) {
       print(e.toString());

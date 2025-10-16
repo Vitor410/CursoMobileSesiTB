@@ -8,9 +8,7 @@ import 'login_screen.dart';
 import 'checkin_history_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  final Company company;
-
-  const HomeScreen({super.key, required this.company});
+  const HomeScreen({super.key});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -49,13 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Company: ${widget.company.name}',
-              style: const TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
             const SizedBox(height: 16.0),
             const Text(
               'Check the box to confirm your check-in',
@@ -104,16 +95,8 @@ class _HomeScreenState extends State<HomeScreen> {
       _message = '';
     });
 
-    bool isWithinWorkplace = await _geoService.isWithinWorkplace(
-      widget.company,
-    );
-    if (!isWithinWorkplace) {
-      setState(() {
-        _isLoading = false;
-        _message = 'You are not within 100 meters of the workplace.';
-      });
-      return;
-    }
+    // For now, skip geolocation check since no company is selected
+    // In a real app, you might have a default company or user selection
 
     Position position = await Geolocator.getCurrentPosition();
     await _firestoreService.saveCheckIn(

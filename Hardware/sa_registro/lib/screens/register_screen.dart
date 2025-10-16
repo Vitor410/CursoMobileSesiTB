@@ -4,9 +4,7 @@ import '../services/company_service.dart';
 import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
-  final Company? company;
-
-  const RegisterScreen({super.key, this.company});
+  const RegisterScreen({super.key});
 
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
@@ -19,6 +17,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
   String _error = '';
+  bool _isDisposed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +28,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (widget.company != null)
-              Text(
-                'Company: ${widget.company!.name}',
-                style: const TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
             const SizedBox(height: 16.0),
             TextField(
               controller: _nifController,
@@ -80,48 +71,54 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
+  @override
+  void dispose() {
+    _isDisposed = true;
+    _nifController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
   void _register() async {
     String nif = _nifController.text.trim();
     String password = _passwordController.text.trim();
     String confirmPassword = _confirmPasswordController.text.trim();
 
     if (nif.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
-      setState(() {
-        _error = 'Please fill in all fields';
-      });
+      if (mounted && !_isDisposed) {
+        setState(() {
+          _error = 'Please fill in all fields';
+        });
+      }
       return;
     }
 
     if (password != confirmPassword) {
-      setState(() {
-        _error = 'Passwords do not match';
-      });
+      if (mounted && !_isDisposed) {
+        setState(() {
+          _error = 'Passwords do not match';
+        });
+      }
       return;
     }
 
-    if (widget.company == null) {
-      setState(() {
-        _error = 'No company selected';
-      });
-      return;
-    }
+    var user = await _auth.registerWithNifAndPassword(nif, password);
+    if (_isDisposed) return; // Check if disposed before proceeding
 
-    var user = await _auth.registerWithNifAndPassword(
-      nif,
-      password,
-      widget.company!.id,
-    );
     if (user != null) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => LoginScreen(company: widget.company),
-        ),
-      );
+      if (mounted && !_isDisposed) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+        );
+      }
     } else {
-      setState(() {
-        _error = 'Registration failed';
-      });
+      if (mounted && !_isDisposed) {
+        setState(() {
+          _error = 'Registration failed';
+        });
+      }
     }
   }
 }
