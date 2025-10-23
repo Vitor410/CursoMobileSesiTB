@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
-import '../services/company_service.dart';
-import 'login_screen.dart';
+import 'company_selection_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -110,7 +109,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       if (mounted && !_isDisposed) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()),
+          MaterialPageRoute(
+            builder: (context) => const CompanySelectionScreen(),
+          ),
         );
       }
     } else {

@@ -14,7 +14,7 @@ class AuthService {
       );
       return result.user;
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       return null;
     }
   }
@@ -29,7 +29,7 @@ class AuthService {
       await _db.collection('users').doc(result.user!.uid).set({'nif': nif});
       return result.user;
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       return null;
     }
   }

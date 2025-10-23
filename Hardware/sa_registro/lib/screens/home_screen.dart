@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import '../services/auth_service.dart';
-import '../services/geolocation_service.dart';
 import '../services/firestore_service.dart';
-import '../services/company_service.dart';
-import 'login_screen.dart';
+import 'company_selection_screen.dart';
 import 'checkin_history_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,7 +14,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final AuthService _auth = AuthService();
-  final GeolocationService _geoService = GeolocationService();
   final FirestoreService _firestoreService = FirestoreService();
   bool _isChecked = false;
   bool _isLoading = false;
@@ -85,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await _auth.signOut();
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const LoginScreen()),
+      MaterialPageRoute(builder: (context) => const CompanySelectionScreen()),
     );
   }
 

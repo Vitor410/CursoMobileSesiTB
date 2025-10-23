@@ -62,7 +62,7 @@ class _CompanySelectionScreenState extends State<CompanySelectionScreen> {
     // In a real app, you might store selected company temporarily
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => LoginScreen(company: company)),
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
     );
   }
 
