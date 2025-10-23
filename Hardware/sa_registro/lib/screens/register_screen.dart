@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
+import '../services/company_service.dart';
 import 'company_selection_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
