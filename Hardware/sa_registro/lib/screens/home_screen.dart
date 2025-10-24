@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import '../services/auth_service.dart';
 import '../services/firestore_service.dart';
-import 'company_selection_screen.dart';
+import 'login_screen.dart';
 import 'checkin_history_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await _auth.signOut();
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const CompanySelectionScreen()),
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
     );
   }
 

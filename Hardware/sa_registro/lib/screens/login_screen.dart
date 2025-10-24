@@ -12,7 +12,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final AuthService _auth = AuthService();
-  final TextEditingController _nifController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String _error = '';
 
@@ -26,9 +26,9 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
-              controller: _nifController,
+              controller: _emailController,
               decoration: const InputDecoration(
-                labelText: 'NIF',
+                labelText: 'Email',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -64,17 +64,17 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _login() async {
-    String nif = _nifController.text.trim();
+    String email = _emailController.text.trim();
     String password = _passwordController.text.trim();
 
-    if (nif.isEmpty || password.isEmpty) {
+    if (email.isEmpty || password.isEmpty) {
       setState(() {
         _error = 'Please fill in all fields';
       });
       return;
     }
 
-    var user = await _auth.signInWithNifAndPassword(nif, password);
+    var user = await _auth.signInWithEmailAndPassword(email, password);
     if (user != null) {
       Navigator.pushReplacement(
         context,
@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     } else {
       setState(() {
-        _error = 'Invalid NIF or password';
+        _error = 'Invalid email or password';
       });
     }
   }

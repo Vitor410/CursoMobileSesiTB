@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
-import '../services/company_service.dart';
-import 'company_selection_screen.dart';
+import 'home_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -12,7 +11,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final AuthService _auth = AuthService();
-  final TextEditingController _nifController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
@@ -30,9 +29,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           children: [
             const SizedBox(height: 16.0),
             TextField(
-              controller: _nifController,
+              controller: _emailController,
               decoration: const InputDecoration(
-                labelText: 'NIF',
+                labelText: 'Email',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -74,18 +73,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void dispose() {
     _isDisposed = true;
-    _nifController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
   }
 
   void _register() async {
-    String nif = _nifController.text.trim();
+    String email = _emailController.text.trim();
     String password = _passwordController.text.trim();
     String confirmPassword = _confirmPasswordController.text.trim();
 
-    if (nif.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
       if (mounted && !_isDisposed) {
         setState(() {
           _error = 'Please fill in all fields';
@@ -103,16 +102,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
       return;
     }
 
-    var user = await _auth.registerWithNifAndPassword(nif, password);
+    var user = await _auth.registerWithEmailAndPassword(email, password);
     if (_isDisposed) return; // Check if disposed before proceeding
 
     if (user != null) {
       if (mounted && !_isDisposed) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (context) => const CompanySelectionScreen(),
-          ),
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
         );
       }
     } else {
