@@ -1,5 +1,0 @@
-- [x] Reescrever método createUserWithEmailPassword no AuthService com validação e melhor tratamento de erros
-- [x] Verificar inicialização do Firebase em main.dart
-- [x] Garantir chamada correta do método em login_screen.dart
-- [x] Construir app em debug
-- [x] Testar criação de conta
