@@ -1,12 +1,5 @@
-- [x] Update pubspec.yaml with required dependencies
-- [x] Create lib/main.dart with Firebase initialization
-- [x] Create lib/screens/login_screen.dart
-- [x] Create lib/screens/home_screen.dart
-- [x] Create lib/screens/registro_screen.dart
-- [x] Create lib/services/auth_service.dart
-- [x] Create lib/services/location_service.dart
-- [x] Create lib/services/firebase_service.dart
-- [x] Create lib/widgets/custom_button.dart
-- [x] Update AndroidManifest.xml for permissions
-- [x] Run flutter pub get
-- [x] Test app (No devices connected, but code is ready)
+- [x] Reescrever método createUserWithEmailPassword no AuthService com validação e melhor tratamento de erros
+- [x] Verificar inicialização do Firebase em main.dart
+- [x] Garantir chamada correta do método em login_screen.dart
+- [x] Construir app em debug
+- [x] Testar criação de conta

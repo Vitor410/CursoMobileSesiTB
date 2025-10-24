@@ -4,6 +4,7 @@ import '../services/auth_service.dart';
 import '../widgets/custom_button.dart';
 import 'registro_screen.dart';
 import 'login_screen.dart';
+import 'historico_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -19,10 +20,7 @@ class HomeScreen extends StatelessWidget {
             icon: const Icon(Icons.logout),
             onPressed: () async {
               await authService.signOut();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (_) => LoginScreen()),
-              );
+              // Navigation handled by AuthWrapper
             },
           ),
         ],
@@ -41,6 +39,17 @@ class HomeScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (_) => RegistroScreen()),
                 );
               },
+            ),
+            const SizedBox(height: 10),
+            CustomButton(
+              text: 'Ver Histórico',
+              onPressed: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => HistoricoScreen()),
+                );
+              },
+              color: Colors.blueGrey,
             ),
           ],
         ),

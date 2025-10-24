@@ -59,4 +59,5 @@ class DefaultFirebaseOptions {
     projectId: 'sa-registro',
     storageBucket: 'sa-registro.firebasestorage.app',
   );
+
 }

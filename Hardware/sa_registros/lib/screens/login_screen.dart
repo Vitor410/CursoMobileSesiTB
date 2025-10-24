@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../services/auth_service.dart';
 import '../widgets/custom_button.dart';
 import 'home_screen.dart';
+import 'signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -16,37 +17,44 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _loginWithEmailPassword() async {
     setState(() => _isLoading = true);
-    bool success = await context.read<AuthService>().signInWithEmailPassword(
+    String? error = await context.read<AuthService>().signInWithEmailPassword(
       _emailController.text.trim(),
       _passwordController.text.trim(),
     );
     setState(() => _isLoading = false);
-    if (success) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => HomeScreen()),
-      );
+    if (error == null) {
+      // Navigation handled by AuthWrapper
     } else {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Falha no login')));
+      ).showSnackBar(SnackBar(content: Text('Falha no login: $error')));
     }
   }
 
-  Future<void> _loginWithBiometrics() async {
+  Future<void> _createAccount() async {
     setState(() => _isLoading = true);
-    bool success = await context
-        .read<AuthService>()
-        .authenticateWithBiometrics();
-    setState(() => _isLoading = false);
-    if (success) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => HomeScreen()),
-      );
-    } else {
+    try {
+      String? error = await context
+          .read<AuthService>()
+          .createUserWithEmailPassword(
+            _emailController.text.trim(),
+            _passwordController.text.trim(),
+          );
+      setState(() => _isLoading = false);
+      if (error == null) {
+        // Conta criada com sucesso - AuthWrapper irá navegar automaticamente
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Conta criada com sucesso!')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Falha na criação da conta: $error')),
+        );
+      }
+    } catch (e) {
+      setState(() => _isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Falha na autenticação biométrica')),
+        SnackBar(content: Text('Erro inesperado: ${e.toString()}')),
       );
     }
   }
@@ -77,10 +85,16 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             const SizedBox(height: 10),
             CustomButton(
-              text: 'Login Biométrico',
-              onPressed: _isLoading ? null : _loginWithBiometrics,
+              text: 'Criar Conta',
+              onPressed: _isLoading
+                  ? null
+                  : () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignupScreen()),
+                    ),
               color: Colors.green,
             ),
+            const SizedBox(height: 10),
           ],
         ),
       ),

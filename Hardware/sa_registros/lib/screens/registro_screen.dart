@@ -76,9 +76,9 @@ class _RegistroScreenState extends State<RegistroScreen> {
         position.longitude,
         DateTime.now(),
       );
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Ponto registrado com sucesso!')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Ponto registrado!')));
       Navigator.pop(context);
     } catch (e) {
       ScaffoldMessenger.of(
